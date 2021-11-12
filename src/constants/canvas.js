@@ -1,0 +1,5 @@
+
+export const CANVAS = {
+  width: 1200,
+  height: 600
+};
