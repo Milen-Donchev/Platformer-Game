@@ -10,8 +10,13 @@ const scene = [PreloadScene, PlayScene];
 new Phaser.Game({
   ...CANVAS,
   type: Phaser.AUTO,
+  pixelArt: true,
+  zoom: 1.2,
   physics: {
-    default: 'arcade'
+    default: 'arcade',
+    arcade: {
+      // debug: true
+    }
   },
   scene
 });
