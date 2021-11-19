@@ -1,22 +1,35 @@
 import Phaser from "phaser";
 
-import { CANVAS } from "./constants/canvas";
+import PlayScene from "./scenes/Play";
+import PreloadScene from "./scenes/Preload";
 
-import PreloadScene from "./scenes/PreloadScene";
-import PlayScene from "./scenes/PlayScene";
+const MAP_WIDTH = 1600;
 
-const scene = [PreloadScene, PlayScene];
+const WIDTH = document.body.offsetWidth;
+const HEIGHT = 600;
 
-new Phaser.Game({
-  ...CANVAS,
+const SHARED_CONFIG = {
+  mapOffset: MAP_WIDTH > WIDTH ? MAP_WIDTH - WIDTH : 0,
+  width: WIDTH,
+  height: HEIGHT,
+  zoomFactor: 1.2,
+};
+
+const Scenes = [PreloadScene, PlayScene];
+const createScene = (Scene) => new Scene(SHARED_CONFIG);
+const initScenes = () => Scenes.map(createScene);
+
+const config = {
   type: Phaser.AUTO,
+  ...SHARED_CONFIG,
   pixelArt: true,
-  zoom: 1.2,
   physics: {
-    default: 'arcade',
+    default: "arcade",
     arcade: {
-      // debug: true
-    }
+      debug: true,
+    },
   },
-  scene
-});
+  scene: initScenes(),
+};
+
+new Phaser.Game(config);
