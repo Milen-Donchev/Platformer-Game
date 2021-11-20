@@ -10,7 +10,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
-    // Mixins
     Object.assign(this, collidable);
 
     this.init();
@@ -18,7 +17,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   init() {
-    this.gravity = 500;
+    this.gravity = 600;
     this.playerSpeed = 150;
     this.jumpCount = 0;
     this.consecutiveJumps = 1;
@@ -37,37 +36,54 @@ class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   update() {
-    const { left, right, space, up } = this.cursors;
-    const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space);
-    const onFloor = this.body.onFloor();
+    this.handlePlayerMovement();
+    this.handlePlayerAnimations();
+  }
 
-    if (left.isDown) {
-      this.setVelocityX(-this.playerSpeed);
-      this.setFlipX(true);
-    } else if (right.isDown) {
-      this.setVelocityX(this.playerSpeed);
-      this.setFlipX(false);
+  handlePlayerMovement() {
+    const { left, right, space } = this.cursors;
+
+    const UP = Phaser.Input.Keyboard.JustDown(space);
+    const LEFT = left.isDown;
+    const RIGHT = right.isDown;
+    const ON_FLOOR = this.body.onFloor();
+    const VELOCITY_X = RIGHT ? this.playerSpeed : -this.playerSpeed;
+    const CAN_JUMP = ON_FLOOR || this.jumpCount <= this.consecutiveJumps;
+    const JUMP_ALLOWED = CAN_JUMP && UP;
+    const moveUp = () => {
+      this.setVelocityY(-this.playerSpeed * 2);
+      this.jumpCount++;
+    };
+    const moveHorizontal = () => this.setVelocityX(VELOCITY_X);
+
+    if (ON_FLOOR) this.jumpCount = 0;
+    if (!ON_FLOOR && this.jumpCount === 0) return;
+
+    if ((LEFT && JUMP_ALLOWED) || (RIGHT && JUMP_ALLOWED)) {
+      this.setFlipX(LEFT);
+      moveUp();
+      moveHorizontal();
+    }
+
+    if (LEFT) {
+      this.setFlipX(LEFT);
+      moveHorizontal();
+    } else if (RIGHT) {
+      this.setFlipX(LEFT);
+      moveHorizontal();
+    } else if (JUMP_ALLOWED) {
+      moveUp();
     } else {
       this.setVelocityX(0);
     }
+  }
 
-    if (
-      isSpaceJustDown &&
-      (onFloor || this.jumpCount < this.consecutiveJumps)
-    ) {
-      this.setVelocityY(-this.playerSpeed * 2);
-      this.jumpCount++;
-    }
-
-    if (onFloor) {
-      this.jumpCount = 0;
-    }
-
-    onFloor
-      ? this.body.velocity.x !== 0
-        ? this.play("run", true)
-        : this.play("idle", true)
-      : this.play("jump", true);
+  handlePlayerAnimations() {
+    this.body.velocity.y !== 0
+      ? this.play("jump", true)
+      : this.body.velocity.x === 0
+      ? this.play("idle", true)
+      : this.play("run", true);
   }
 }
 
