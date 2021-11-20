@@ -4,15 +4,24 @@ import PlayScene from "./scenes/Play";
 import PreloadScene from "./scenes/Preload";
 
 const MAP_WIDTH = 1600;
-
 const WIDTH = document.body.offsetWidth;
 const HEIGHT = 600;
+const ZOOM_FACTOR = 1.2;
 
 const SHARED_CONFIG = {
   mapOffset: MAP_WIDTH > WIDTH ? MAP_WIDTH - WIDTH : 0,
   width: WIDTH,
   height: HEIGHT,
-  zoomFactor: 1.2,
+  topLeftCorner: {
+    x: (WIDTH - WIDTH / ZOOM_FACTOR) / 2,
+    y: (HEIGHT - HEIGHT / ZOOM_FACTOR) / 2,
+  },
+  topRightCorner: {
+    x: WIDTH / ZOOM_FACTOR + (WIDTH - WIDTH / ZOOM_FACTOR) / 2,
+    y: (HEIGHT - HEIGHT / ZOOM_FACTOR) / 2,
+  },
+  zoomFactor: ZOOM_FACTOR,
+  debug: false,
 };
 
 const Scenes = [PreloadScene, PlayScene];
@@ -26,7 +35,7 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      debug: true,
+      debug: SHARED_CONFIG.debug,
     },
   },
   scene: initScenes(),

@@ -5,6 +5,8 @@ class Birdman extends Enemy {
   constructor(scene, x, y) {
     super(scene, x, y, "birdman");
     initAnims(scene.anims);
+
+    this.damage = 10;
   }
 
   update(time, delta) {

@@ -36,11 +36,11 @@ class Play extends Phaser.Scene {
     const tileset = this.map.getTileset("main_lev_build_1");
     const tileset2 = this.map.getTileset("main_lev_build_2");
     const collidable = this.map.createStaticLayer("collidable", tileset);
-    const environment = this.map.createStaticLayer("cosmetics", [
+    const environment = this.map.createStaticLayer("cosmetics", tileset);
+    const platforms = this.map.createStaticLayer("platforms", [
       tileset,
       tileset2,
     ]);
-    const platforms = this.map.createStaticLayer("platforms", tileset);
     const playerZones = this.map.getObjectLayer("player_zones");
     const enemySpawns = this.map.getObjectLayer("enemy_zones");
 
@@ -83,7 +83,13 @@ class Play extends Phaser.Scene {
   }
 
   createEnemyColliders() {
-    this.enemies.addCollider(this.layers.collidable).addCollider(this.player);
+    this.enemies
+      .addCollider(this.layers.collidable)
+      .addCollider(this.player, this.handlePlayerTakesHit);
+  }
+
+  handlePlayerTakesHit(enemy, player) {
+    player.takeHit(enemy);
   }
 
   createPlayerColliders() {
