@@ -13,7 +13,11 @@ export default {
       this.setVelocityY(-this.playerSpeed * 2);
       this.jumpCount++;
     };
-    const moveHorizontal = () => this.setVelocityX(VELOCITY_X);
+    const moveHorizontal = () => {
+      this.setVelocityX(VELOCITY_X);
+      this.lastDirection =
+        Phaser.Physics.Arcade[RIGHT ? "FACING_RIGHT" : "FACING_LEFT"];
+    };
 
     if (ON_FLOOR) this.jumpCount = 0;
     if (!ON_FLOOR && this.jumpCount === 0 && UP) return;
@@ -38,10 +42,15 @@ export default {
   },
 
   handlePlayerAnimations() {
+    if (this.isPlayingAnimation("shoot-projectile")) return;
     this.body.velocity.y !== 0
       ? this.play("jump", true)
       : this.body.velocity.x === 0
       ? this.play("idle", true)
       : this.play("run", true);
+  },
+
+  isPlayingAnimation(animKey) {
+    return this.anims.isPlaying && this.anims.getCurrentKey() === animKey;
   },
 };

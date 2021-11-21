@@ -23,6 +23,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.timeFromLastTurn = 0;
     this.maxPatrolDistance = 250;
     this.currentPatrolDistance = 0;
+    this.hp = 40;
 
     this.platformCollidersLayer = null;
     this.rayGraphics = this.scene.add.graphics({
@@ -80,6 +81,14 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   setPlatformColliders(platformCollidersLayer) {
     this.platformCollidersLayer = platformCollidersLayer;
+  }
+
+  takeHit(source) {
+    this.hp -= source.damage;
+    source.removeProjectile();
+    if (this.hp <= 0) {
+      console.log("ENEMY KILLED!");
+    }
   }
 }
 

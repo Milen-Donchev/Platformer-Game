@@ -19,4 +19,14 @@ export default (anims) => {
     frameRate: 2,
     repeat: 1,
   });
+
+  anims.create({
+    key: "shoot-projectile",
+    frames: anims.generateFrameNumbers("shoot-projectile", {
+      start: 0,
+      end: 7,
+    }),
+    frameRate: 14,
+    repeat: 0,
+  });
 };

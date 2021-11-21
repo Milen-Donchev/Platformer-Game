@@ -6,6 +6,7 @@ import playerHit from "../mixins/player/playerHit";
 import playerMove from "../mixins/player/playerMove";
 import playerHealth from "../mixins/player/playerHealth";
 import playerAttacks from "../mixins/player/playerAttacks";
+import Projectiles from "../attacks/Projectiles";
 class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, "player");
@@ -32,6 +33,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.hasBeenHit = false;
     this.hitVelocity = 250;
     this.hp = 100;
+    this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT;
+    this.projectiles = new Projectiles(this.scene);
     this.cursors = this.scene.input.keyboard.createCursorKeys();
 
     this.body.setSize(20, 36);
