@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import SpriteEffect from "../effects/SpriteEffect";
 
 class Projectile extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, key) {
@@ -20,7 +21,8 @@ class Projectile extends Phaser.GameObjects.Sprite {
     }
   }
 
-  removeProjectile() {
+  removeProjectile(target) {
+    new SpriteEffect(this.scene, 0, 0, "damage").playEffect(target);
     this.body.reset(0, 0);
     this.setVisible(false);
     this.setActive(false);

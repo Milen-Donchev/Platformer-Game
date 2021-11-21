@@ -32,6 +32,15 @@ class Preload extends Phaser.Scene {
       frameHeight: 64,
       spacing: 32,
     });
+
+    this.load.spritesheet(
+      "damage-effect",
+      "assets/weapons/hit_effect_sheet.png",
+      {
+        frameWidth: 32,
+        frameHeight: 32,
+      }
+    );
   }
 
   create() {

@@ -85,7 +85,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   takeHit(source) {
     this.hp -= source.damage;
-    source.removeProjectile();
+    source.removeProjectile(this);
     if (this.hp <= 0) {
       console.log("ENEMY KILLED!");
     }
