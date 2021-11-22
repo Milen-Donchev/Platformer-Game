@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 
 import collidable from "../mixins/collidable";
+import animsMixin from "../mixins/anims";
 
 class Enemy extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, key) {
@@ -12,6 +13,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.config = scene.config;
 
     Object.assign(this, collidable);
+    Object.assign(this, animsMixin);
 
     this.init();
     this.initEvents();
@@ -31,8 +33,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     });
 
     this.body.setGravityY(this.gravity);
-    this.setSize(20, 45);
-    this.setOffset(7, 20);
     this.setCollideWorldBounds(true);
     this.setImmovable(true);
     this.setOrigin(0.5, 1);
@@ -44,6 +44,16 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(time) {
+    if (this.getBounds().bottom > 600) {
+      this.scene.events.removeListener(
+        Phaser.Scenes.Events.UPDATE,
+        this.update,
+        this
+      );
+      this.setActive(false);
+      this.rayGraphics.clear();
+      return this.destroy();
+    }
     this.patrol(time);
   }
 
@@ -85,9 +95,13 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   takeHit(source) {
     this.hp -= source.damage;
-    source.removeProjectile(this);
+    source.handleHitTaken(this);
+    console.log(this.hp);
     if (this.hp <= 0) {
-      console.log("ENEMY KILLED!");
+      this.setTint(0xff0000);
+      this.setVelocity(0, -200);
+      this.body.checkCollision.none = true;
+      this.setCollideWorldBounds(false);
     }
   }
 }

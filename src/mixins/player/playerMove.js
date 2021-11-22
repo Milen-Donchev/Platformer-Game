@@ -49,8 +49,4 @@ export default {
       ? this.play("idle", true)
       : this.play("run", true);
   },
-
-  isPlayingAnimation(animKey) {
-    return this.anims.isPlaying && this.anims.getCurrentKey() === animKey;
-  },
 };

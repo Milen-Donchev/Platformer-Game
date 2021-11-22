@@ -33,6 +33,12 @@ class Preload extends Phaser.Scene {
       spacing: 32,
     });
 
+    this.load.spritesheet("snaky", "assets/enemy/enemy_sheet_2.png", {
+      frameWidth: 32,
+      frameHeight: 64,
+      spacing: 32,
+    });
+
     this.load.spritesheet(
       "damage-effect",
       "assets/weapons/hit_effect_sheet.png",
@@ -41,6 +47,12 @@ class Preload extends Phaser.Scene {
         frameHeight: 32,
       }
     );
+
+    this.load.spritesheet("sword-attack", "assets/weapons/sword_sheet_1.png", {
+      frameWidth: 52,
+      frameHeight: 32,
+      spacing: 16,
+    });
   }
 
   create() {

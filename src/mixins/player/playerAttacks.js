@@ -5,4 +5,13 @@ export default {
       this.projectiles.fireProjectile(this);
     });
   },
+  swordAttack() {
+    this.scene.input.keyboard.on("keydown-E", () => {
+      this.meleeWeapon.attack(this);
+    });
+  },
+  initPlayerAttacks() {
+    this.fireProjectile();
+    this.swordAttack();
+  },
 };

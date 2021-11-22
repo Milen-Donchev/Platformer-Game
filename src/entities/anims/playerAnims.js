@@ -29,4 +29,14 @@ export default (anims) => {
     frameRate: 14,
     repeat: 0,
   });
+
+  anims.create({
+    key: "swing-sword",
+    frames: anims.generateFrameNumbers("sword-attack", {
+      start: 0,
+      end: 2,
+    }),
+    frameRate: 20,
+    repeat: 0,
+  });
 };
