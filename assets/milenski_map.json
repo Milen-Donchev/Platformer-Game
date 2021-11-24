@@ -226,6 +226,14 @@
                  "height":14,
                  "id":16,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -238,6 +246,14 @@
                  "height":14,
                  "id":17,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":2
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -250,6 +266,14 @@
                  "height":14,
                  "id":18,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":2
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -262,6 +286,14 @@
                  "height":14,
                  "id":19,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -274,6 +306,14 @@
                  "height":14,
                  "id":20,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":2
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -286,6 +326,14 @@
                  "height":14,
                  "id":21,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -298,6 +346,14 @@
                  "height":14,
                  "id":22,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -310,6 +366,14 @@
                  "height":14,
                  "id":23,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -322,6 +386,14 @@
                  "height":14,
                  "id":24,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -334,6 +406,14 @@
                  "height":14,
                  "id":25,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":2
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -346,6 +426,14 @@
                  "height":14,
                  "id":26,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":2
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -358,6 +446,14 @@
                  "height":14,
                  "id":27,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":4
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -370,6 +466,14 @@
                  "height":14,
                  "id":28,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":2
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -382,6 +486,14 @@
                  "height":14,
                  "id":29,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":3
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -394,6 +506,14 @@
                  "height":14,
                  "id":30,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -406,6 +526,14 @@
                  "height":14,
                  "id":31,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":2
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -418,6 +546,14 @@
                  "height":14,
                  "id":32,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":2
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -430,6 +566,14 @@
                  "height":14,
                  "id":33,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":3
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -442,6 +586,14 @@
                  "height":14,
                  "id":34,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":3
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -454,6 +606,14 @@
                  "height":14,
                  "id":35,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":2
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -466,6 +626,14 @@
                  "height":14,
                  "id":36,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":3
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -478,6 +646,14 @@
                  "height":14,
                  "id":37,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":4
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -490,6 +666,14 @@
                  "height":14,
                  "id":38,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":2
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -502,6 +686,14 @@
                  "height":14,
                  "id":39,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":3
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -514,6 +706,14 @@
                  "height":14,
                  "id":40,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":2
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -526,6 +726,14 @@
                  "height":14,
                  "id":41,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":3
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -538,6 +746,14 @@
                  "height":14,
                  "id":42,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":2
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -550,6 +766,14 @@
                  "height":14,
                  "id":43,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":1
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -562,6 +786,14 @@
                  "height":14,
                  "id":44,
                  "name":"",
+                 "properties":
+                    {
+                     "pickupValue":2
+                    },
+                 "propertytypes":
+                    {
+                     "pickupValue":"int"
+                    },
                  "rotation":0,
                  "type":"Diamond",
                  "visible":true,
@@ -574,9 +806,32 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":11,
+         "name":"spiked_bg",
+         "objects":[
+                {
+                 "gid":8194,
+                 "height":270,
+                 "id":45,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":480,
+                 "x":0,
+                 "y":288
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":10,
- "nextobjectid":45,
+ "nextlayerid":13,
+ "nextobjectid":46,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",
@@ -670,6 +925,31 @@
                 }
             },
          "tilewidth":16
+        }, 
+        {
+         "columns":0,
+         "firstgid":8194,
+         "grid":
+            {
+             "height":1,
+             "orientation":"orthogonal",
+             "width":1
+            },
+         "margin":0,
+         "name":"bg_spikes_dark",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":270,
+         "tiles":
+            {
+             "0":
+                {
+                 "image":"bg_spikes_dark.png",
+                 "imageheight":270,
+                 "imagewidth":480
+                }
+            },
+         "tilewidth":480
         }],
  "tilewidth":16,
  "type":"map",

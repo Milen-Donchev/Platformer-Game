@@ -13,20 +13,41 @@ export default {
     this.createHpBar();
     if (this.hp - dmg < 0) {
       setTimeout(() => {
-        this.setCollideWorldBounds(false);
-        this.setVelocity(0, -200);
-        this.setTint(0xff0000);
-        this.body.checkCollision.none = true;
-        this.scene.input.keyboard.enabled = false;
-        this.scene.time.addEvent({
-          delay: 2000,
-          loop: false,
-          callback: () => {
-            Emitter.emit('PLAYER_LOSE')
-          },
-          repeat: false  
-        });
+        this.loseGame();
       }, 0);
     }
   },
+
+  emitPlayerLose() {
+    Emitter.emit('PLAYER_LOSE')
+  },
+
+  handleFallBeyondBounds() {
+    if (this.getBounds().bottom > 600){  
+      this.scene.time.addEvent({
+        delay: 500,
+        loop: false,
+        callback: () => {
+          this.emitPlayerLose();
+        },
+        repeat: false  
+      }); 
+    }
+  },
+
+  loseGame() {
+    this.setCollideWorldBounds(false);
+    this.setVelocity(0, -200);
+    this.setTint(0xff0000);
+    this.body.checkCollision.none = true;
+    this.scene.input.keyboard.enabled = false;
+    this.scene.time.addEvent({
+      delay: 2000,
+      loop: false,
+      callback: () => {
+        this.emitPlayerLose();
+      },
+      repeat: false  
+    });
+  }
 };

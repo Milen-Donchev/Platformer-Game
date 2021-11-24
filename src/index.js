@@ -21,7 +21,8 @@ const SHARED_CONFIG = {
     y: (HEIGHT - HEIGHT / ZOOM_FACTOR) / 2,
   },
   zoomFactor: ZOOM_FACTOR,
-  debug: true
+  debug: false,
+  backgroundColor: '#190d1a'
 };
 
 const Scenes = [PreloadScene, PlayScene];

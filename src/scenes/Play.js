@@ -21,6 +21,8 @@ class Play extends Phaser.Scene {
     this.enemies = null;
     this.score = 0;
     this.hud = null;
+    this.spikedBg = null;
+    this.sky = null;
   }
 
   create({gameStatus}) {
@@ -31,6 +33,7 @@ class Play extends Phaser.Scene {
     this.createMap();
     this.createLayers();
     this.getPlayerZones();
+    this.createBG();
     this.createCollectibles();
     this.createPlayer();
     this.createEnemies();
@@ -90,11 +93,25 @@ class Play extends Phaser.Scene {
     };
   }
 
+  createBG() {
+    const spikedBg = this.map.getObjectLayer("spiked_bg").objects[0];
+    this.spikedBg = this.add.tileSprite(spikedBg.x, spikedBg.y, this.config.width, spikedBg.height, 'bg-spikes-dark')
+    .setOrigin(0, 1)
+    .setScrollFactor(0, 1)
+    .setDepth(-20);
+    this.sky = this.add.tileSprite(0, 0, this.config.width, 200, 'sky2')
+    .setOrigin(0, 0)
+    .setScrollFactor(0, 1)
+    .setDepth(-21)
+    
+  }
+  
   createCollectibles() {
     const collectibles = new Collectibles(this);
     const colTypes = collectibles.getTypes();
     this.layers.collectibles.objects.forEach(coll => {
       const collectible = new colTypes[coll.type](this, coll.x, coll.y);
+      collectible.setScale(1 + (coll.properties.pickupValue) / 10);
       collectibles.add(collectible);
     });
     this.collectibles = collectibles;
@@ -157,6 +174,11 @@ class Play extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, mapWidth, height + 200);
     this.cameras.main.setBounds(0, 0, mapWidth, height).setZoom(zoomFactor);
     this.cameras.main.startFollow(this.player);
+  }
+
+  update() {
+    this.spikedBg.tilePositionX = this.cameras.main.scrollX * 0.3;
+    this.sky.tilePositionX = this.cameras.main.scrollX * 0.1;
   }
 }
 

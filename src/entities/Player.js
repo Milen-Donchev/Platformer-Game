@@ -63,6 +63,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.handlePlayerMovement();
     this.handlePlayerAnimations();
     this.handleDuck();
+    this.handleFallBeyondBounds();
   }
 }
 
