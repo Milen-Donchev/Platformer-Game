@@ -31,12 +31,29 @@ export default (anims) => {
   });
 
   anims.create({
+    key: "iceball",
+    frames: [
+      {key: 'iceball'},
+      {key: 'iceball-2'}
+    ],
+    frameRate: 7,
+    repeat: -1,
+  });
+
+  anims.create({
     key: "swing-sword",
     frames: anims.generateFrameNumbers("sword-attack", {
       start: 0,
       end: 2,
     }),
     frameRate: 20,
+    repeat: 0,
+  });
+
+  anims.create({
+    key: "duck",
+    frames: anims.generateFrameNumbers("player-duck", { start: 0, end: 2 }),
+    frameRate: 10,
     repeat: 0,
   });
 };

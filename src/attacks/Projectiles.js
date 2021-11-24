@@ -3,14 +3,14 @@ import Phaser from "phaser";
 import Projectile from "./Projectile";
 
 class Projectiles extends Phaser.Physics.Arcade.Group {
-  constructor(scene) {
+  constructor(scene, key) {
     super(scene.physics.world, scene);
 
     this.createMultiple({
       frameQuantity: 5,
       visible: false,
       active: false,
-      key: "iceball",
+      key,
       classType: Projectile,
     });
 
@@ -18,7 +18,7 @@ class Projectiles extends Phaser.Physics.Arcade.Group {
     this.timeFromLastShot = null;
   }
 
-  fireProjectile(initiator) {
+  fireProjectile(initiator, animation) {
     const projectile = this.getFirstDead(false);
 
     if (
@@ -37,6 +37,7 @@ class Projectiles extends Phaser.Physics.Arcade.Group {
       projectile.speed = FACING_RIGHT ? SPEED : -SPEED;
       projectile.setFlipX(!FACING_RIGHT);
       projectile.fire(CENTER_X, y);
+      this.playAnimation(animation);
       this.timeFromLastShot = new Date().getTime();
     }
   }

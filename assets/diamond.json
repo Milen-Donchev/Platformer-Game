@@ -1,0 +1,26 @@
+{ "columns":0,
+ "grid":
+    {
+     "height":1,
+     "orientation":"orthogonal",
+     "width":1
+    },
+ "margin":0,
+ "name":"diamond",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"1.7.2",
+ "tileheight":14,
+ "tiles":
+    {
+     "0":
+        {
+         "image":"collectibles\/diamond.png",
+         "imageheight":14,
+         "imagewidth":16
+        }
+    },
+ "tilewidth":16,
+ "type":"tileset",
+ "version":1.1
+}

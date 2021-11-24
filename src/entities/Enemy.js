@@ -96,7 +96,6 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   takeHit(source) {
     this.hp -= source.damage;
     source.handleHitTaken(this);
-    console.log(this.hp);
     if (this.hp <= 0) {
       this.setTint(0xff0000);
       this.setVelocity(0, -200);

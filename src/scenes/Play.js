@@ -1,6 +1,10 @@
 import Phaser from "phaser";
 import Player from "../entities/Player";
 import Enemies from "../groups/Enemies";
+import Collectibles from "../groups/Collectibles";
+import HUD from '../hud';
+
+import Emitter from "../events/Emitter";
 
 import initGeneralAnims from "../entities/anims/generalAnims";
 
@@ -12,20 +16,28 @@ class Play extends Phaser.Scene {
     this.map = null;
     this.layers = null;
     this.playerZones = null;
+    this.collectibles = null;
     this.player = null;
     this.enemies = null;
+    this.score = 0;
+    this.hud = null;
   }
 
-  create() {
+  create({gameStatus}) {
+    initGeneralAnims(this.anims);
+    if (gameStatus !== 'PLAYER_LOSE'){
+      this.createGameEvents();
+    }
     this.createMap();
     this.createLayers();
     this.getPlayerZones();
+    this.createCollectibles();
     this.createPlayer();
     this.createEnemies();
     this.createEnemyColliders();
     this.createPlayerColliders();
     this.setupFollowupCameraOn();
-    initGeneralAnims(this.anims);
+    this.hud = new HUD(this, 0, 0);
   }
 
   createMap() {
@@ -40,22 +52,34 @@ class Play extends Phaser.Scene {
     const tileset2 = this.map.getTileset("main_lev_build_2");
     const collidable = this.map.createStaticLayer("collidable", tileset);
     const environment = this.map.createStaticLayer("cosmetics", tileset);
+    const traps = this.map.createStaticLayer("traps", tileset);
     const platforms = this.map.createStaticLayer("platforms", [
       tileset,
       tileset2,
     ]);
     const playerZones = this.map.getObjectLayer("player_zones");
     const enemySpawns = this.map.getObjectLayer("enemy_zones");
+    const collectibles = this.map.getObjectLayer("collectibles");
 
     collidable.setCollisionBetween(1674, 1675);
+    traps.setCollisionBetween(3537, 3538);
 
     this.layers = {
       environment,
       platforms,
+      traps,
       collidable,
       playerZones,
       enemySpawns,
+      collectibles
     };
+  }
+
+  createGameEvents() {
+    Emitter.on('PLAYER_LOSE', () => {
+      this.scene.restart({gameStatus: 'PLAYER_LOSE'});
+      this.input.keyboard.enabled = true;
+    })
   }
 
   getPlayerZones() {
@@ -64,6 +88,16 @@ class Play extends Phaser.Scene {
       start: playerZones.find((zone) => zone.name === "spawnZone"),
       end: playerZones.find((zone) => zone.name === "endZone"),
     };
+  }
+
+  createCollectibles() {
+    const collectibles = new Collectibles(this);
+    const colTypes = collectibles.getTypes();
+    this.layers.collectibles.objects.forEach(coll => {
+      const collectible = new colTypes[coll.type](this, coll.x, coll.y);
+      collectibles.add(collectible);
+    });
+    this.collectibles = collectibles;
   }
 
   createPlayer() {
@@ -93,16 +127,28 @@ class Play extends Phaser.Scene {
       .addOverlap(this.player.meleeWeapon, this.handleEnemyTakesHit);
   }
 
-  handleEnemyTakesHit(enemy, source) {
-    enemy.takeHit(source);
+  handleEnemyTakesHit(entity, source) {
+    if (!source.damage) {
+      source.damage = 20;
+    }
+    entity.takeHit(source);
   }
 
   handlePlayerTakesHit(enemy, player) {
     player.takeHit(enemy);
   }
 
+  handleDiamondPickup(player, diamond, hud) {
+    this.score += diamond.pickupValue;
+    hud.updateScoreBoard(this.score);
+    diamond.pickup(player);
+  }
+
   createPlayerColliders() {
     this.player.addCollider(this.layers.collidable);
+    this.player.addCollider(this.enemies.getProjectiles(), this.handleEnemyTakesHit);
+    this.player.addCollider(this.layers.traps, this.handleEnemyTakesHit);
+    this.player.addOverlap(this.collectibles, (player, diamond) => this.handleDiamondPickup(player, diamond, this.hud));
   }
 
   setupFollowupCameraOn() {

@@ -1,5 +1,6 @@
 export default {
   handlePlayerMovement() {
+    if (!this.scene.input.keyboard.enabled) return;
     const { left, right, space } = this.cursors;
 
     const UP = Phaser.Input.Keyboard.JustDown(space);
@@ -18,7 +19,6 @@ export default {
       this.lastDirection =
         Phaser.Physics.Arcade[RIGHT ? "FACING_RIGHT" : "FACING_LEFT"];
     };
-
     if (ON_FLOOR) this.jumpCount = 0;
     if (!ON_FLOOR && this.jumpCount === 0 && UP) return;
 
@@ -41,8 +41,24 @@ export default {
     }
   },
 
+  handleDuck() {
+    this.scene.input.keyboard.on('keydown-DOWN', () => {
+      this.play('duck', true);
+      this.body.setSize(this.width, this.height / 2);
+      this.setOffset(0, this.height / 2);
+      this.setVelocityX(0);
+      this.isDucking = true;
+    });
+
+    this.scene.input.keyboard.on('keyup-DOWN', () => {
+      this.setSize(this.width, this.height);
+      this.setOffset(0, 0);
+      this.isDucking = false;
+    });
+  },
+
   handlePlayerAnimations() {
-    if (this.isPlayingAnimation("shoot-projectile")) return;
+    if (this.isPlayingAnimation("shoot-projectile") || this.isPlayingAnimation("duck")) return;
     this.body.velocity.y !== 0
       ? this.play("jump", true)
       : this.body.velocity.x === 0
