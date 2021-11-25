@@ -251,7 +251,9 @@ class Play extends Phaser.Scene {
           delay: 500,
           callback: () => {
             const levels = JSON.parse(localStorage.getItem("levels"));
-            levels.push({ key: 2, text: "Level 2" });
+            if (!levels.some((level) => level.key === 2)) {
+              levels.push({ key: 2, text: "Level 2" });
+            }
             localStorage.setItem("levels", JSON.stringify(levels));
             this.registry.set(
               "level",
