@@ -10,7 +10,7 @@ import initGeneralAnims from "../entities/anims/generalAnims";
 
 const TOTAL_GEMS_BY_LEVEL = {
   level1: 34,
-  level2: 30,
+  level2: 29,
 };
 
 class Play extends Phaser.Scene {
@@ -72,6 +72,7 @@ class Play extends Phaser.Scene {
       .setDepth(24)
       .setInteractive({ useHandCursor: true });
     backButton.on("pointerdown", () => {
+      this.score = 0;
       this.scene.start("Menu");
     });
   }
@@ -245,22 +246,28 @@ class Play extends Phaser.Scene {
     const gemsToNextLevel = TOTAL_GEMS_BY_LEVEL["level" + this.currentLevel];
 
     if (this.score >= gemsToNextLevel) {
-      this.time.addEvent({
-        delay: 500,
-        callback: () => {
-          const levels = JSON.parse(localStorage.getItem("levels"));
-          levels.push({ key: 2, text: "Level 2" });
-          localStorage.setItem("levels", JSON.stringify(levels));
-          this.registry.set(
-            "level",
-            2 /* hardcoded as we only have 2 levels */
-          );
-          this.score = 0;
-          this.scene.restart();
-        },
-        loop: false,
-        repeat: false,
-      });
+      if (this.currentLevel === 1) {
+        this.time.addEvent({
+          delay: 500,
+          callback: () => {
+            const levels = JSON.parse(localStorage.getItem("levels"));
+            levels.push({ key: 2, text: "Level 2" });
+            localStorage.setItem("levels", JSON.stringify(levels));
+            this.registry.set(
+              "level",
+              2 /* hardcoded as we only have 2 levels */
+            );
+            this.currentLevel = 2;
+            this.score = 0;
+            this.scene.restart();
+          },
+          loop: false,
+          repeat: false,
+        });
+      } else {
+        this.score = 0;
+        this.scene.start("CreditsScene");
+      }
     }
   }
 }
