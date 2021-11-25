@@ -9,7 +9,7 @@ export default {
   },
 
   takeDamage(dmg) {
-    this.hp = this.hp - dmg < 0 ? 0 : (this.hp - dmg);
+    this.hp = this.hp - dmg < 0 ? 0 : this.hp - dmg;
     this.createHpBar();
     if (this.hp - dmg < 0) {
       setTimeout(() => {
@@ -19,19 +19,19 @@ export default {
   },
 
   emitPlayerLose() {
-    Emitter.emit('PLAYER_LOSE')
+    Emitter.emit("PLAYER_LOSE");
   },
 
   handleFallBeyondBounds() {
-    if (this.getBounds().bottom > 600){  
+    if (this.getBounds().bottom > 600) {
       this.scene.time.addEvent({
         delay: 500,
         loop: false,
         callback: () => {
           this.emitPlayerLose();
         },
-        repeat: false  
-      }); 
+        repeat: false,
+      });
     }
   },
 
@@ -47,7 +47,7 @@ export default {
       callback: () => {
         this.emitPlayerLose();
       },
-      repeat: false  
+      repeat: false,
     });
-  }
+  },
 };

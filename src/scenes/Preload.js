@@ -11,6 +11,9 @@ class Preload extends Phaser.Scene {
     this.load.image("tiles-1", "assets/main_lev_build_1.png");
     this.load.image("tiles-2", "assets/main_lev_build_2.png");
 
+    this.load.image("menu-bg", "assets/background01.png");
+    this.load.image("back", "assets/back.png");
+
     this.load.image("bg-spikes-dark", "assets/bg_spikes_dark.png");
     this.load.image("sky2", "assets/sky2.png");
 
@@ -20,7 +23,7 @@ class Preload extends Phaser.Scene {
     this.load.image("fireball-1", "assets/weapons/improved_fireball_001.png");
     this.load.image("fireball-2", "assets/weapons/improved_fireball_002.png");
     this.load.image("fireball-3", "assets/weapons/improved_fireball_003.png");
-    
+
     this.load.image("diamond", "assets/collectibles/diamond.png");
     this.load.image("diamond1", "assets/collectibles/diamond_big_01.png");
     this.load.image("diamond2", "assets/collectibles/diamond_big_02.png");
@@ -78,9 +81,12 @@ class Preload extends Phaser.Scene {
       spacing: 16,
     });
 
-    this.load.on('complete', () => {
-      this.registry.set('level', 1);
-      this.scene.start("PlayScene");
+    this.load.on("complete", () => {
+      const initialLevels = [{ key: 1, text: "Level 1" }];
+      if (!localStorage.getItem("levels")) {
+        localStorage.setItem("levels", JSON.stringify(initialLevels));
+      }
+      this.scene.start("Menu");
     });
   }
 }

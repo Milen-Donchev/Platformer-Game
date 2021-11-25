@@ -2,11 +2,16 @@ import Phaser from "phaser";
 import Player from "../entities/Player";
 import Enemies from "../groups/Enemies";
 import Collectibles from "../groups/Collectibles";
-import HUD from '../hud';
+import HUD from "../hud";
 
 import Emitter from "../events/Emitter";
 
 import initGeneralAnims from "../entities/anims/generalAnims";
+
+const TOTAL_GEMS_BY_LEVEL = {
+  level1: 5,
+  level2: 81,
+};
 
 class Play extends Phaser.Scene {
   constructor(config) {
@@ -26,12 +31,14 @@ class Play extends Phaser.Scene {
     this.sky = null;
   }
 
-  create({gameStatus}) {
+  create({ gameStatus }) {
+    console.log(this.score);
     initGeneralAnims(this.anims);
-    if (gameStatus !== 'PLAYER_LOSE'){
+    if (gameStatus !== "PLAYER_LOSE") {
       this.createGameEvents();
     }
     this.createMap();
+    this.createBackButton();
     this.createLayers();
     this.getPlayerZones();
     this.createBG();
@@ -52,13 +59,30 @@ class Play extends Phaser.Scene {
     this.currentLevel = this.getCurrentLevel();
   }
 
+  createBackButton() {
+    const { topRightCorner, height } = this.config;
+    const X = topRightCorner.x - 10;
+    const Y = height - topRightCorner.y - 10;
+    const backButton = this.add
+      .image(X, Y, "back")
+      .setOrigin(1)
+      .setScrollFactor(0)
+      .setDepth(24)
+      .setInteractive({ useHandCursor: true });
+    backButton.on("pointerdown", () => {
+      this.scene.start("Menu");
+    });
+  }
+
   createLayers() {
     const tileset = this.map.getTileset("main_lev_build_1");
     const tileset2 = this.map.getTileset("main_lev_build_2");
     const collidable = this.map.createStaticLayer("collidable", tileset);
     const environment = this.map.createStaticLayer("cosmetics", tileset);
     const traps = this.map.createStaticLayer("traps", tileset);
-    const enemyBounds = this.map.createStaticLayer("enemy_bounds", tileset).setAlpha(0);
+    const enemyBounds = this.map
+      .createStaticLayer("enemy_bounds", tileset)
+      .setAlpha(0);
     const platforms = this.map.createStaticLayer("platforms", [
       tileset,
       tileset2,
@@ -67,10 +91,9 @@ class Play extends Phaser.Scene {
     const enemySpawns = this.map.getObjectLayer("enemy_zones");
     const collectibles = this.map.getObjectLayer("collectibles");
 
-    
     const level2 = this.currentLevel !== 1;
     if (level2) {
-      enemyBounds.setCollisionBetween( 4555, 4619);
+      enemyBounds.setCollisionBetween(4555, 4619);
       collidable.setCollisionBetween(1674, 1675);
       traps.setCollisionBetween(3537, 3538);
     } else {
@@ -87,15 +110,16 @@ class Play extends Phaser.Scene {
       collidable,
       playerZones,
       enemySpawns,
-      collectibles
+      collectibles,
     };
   }
 
   createGameEvents() {
-    Emitter.on('PLAYER_LOSE', () => {
-      this.scene.restart({gameStatus: 'PLAYER_LOSE'});
+    Emitter.on("PLAYER_LOSE", () => {
+      this.scene.restart({ gameStatus: "PLAYER_LOSE" });
+      this.score = 0;
       this.input.keyboard.enabled = true;
-    })
+    });
   }
 
   getPlayerZones() {
@@ -108,23 +132,30 @@ class Play extends Phaser.Scene {
 
   createBG() {
     const spikedBg = this.map.getObjectLayer("spiked_bg").objects[0];
-    this.spikedBg = this.add.tileSprite(spikedBg.x, spikedBg.y, this.config.width, spikedBg.height, 'bg-spikes-dark')
-    .setOrigin(0, 1)
-    .setScrollFactor(0, 1)
-    .setDepth(-20);
-    this.sky = this.add.tileSprite(0, 0, this.config.width, 200, 'sky2')
-    .setOrigin(0, 0)
-    .setScrollFactor(0, 1)
-    .setDepth(-21)
-    
+    this.spikedBg = this.add
+      .tileSprite(
+        spikedBg.x,
+        spikedBg.y,
+        this.config.width,
+        spikedBg.height,
+        "bg-spikes-dark"
+      )
+      .setOrigin(0, 1)
+      .setScrollFactor(0, 1)
+      .setDepth(-20);
+    this.sky = this.add
+      .tileSprite(0, 0, this.config.width, 200, "sky2")
+      .setOrigin(0, 0)
+      .setScrollFactor(0, 1)
+      .setDepth(-21);
   }
-  
+
   createCollectibles() {
     const collectibles = new Collectibles(this);
     const colTypes = collectibles.getTypes();
-    this.layers.collectibles.objects.forEach(coll => {
+    this.layers.collectibles.objects.forEach((coll) => {
       const collectible = new colTypes[coll.type](this, coll.x, coll.y);
-      collectible.setScale(1 + (coll.properties.pickupValue) / 10);
+      collectible.setScale(1 + coll.properties.pickupValue / 10);
       collectibles.add(collectible);
     });
     this.collectibles = collectibles;
@@ -180,9 +211,14 @@ class Play extends Phaser.Scene {
 
   createPlayerColliders() {
     this.player.addCollider(this.layers.collidable);
-    this.player.addCollider(this.enemies.getProjectiles(), this.handleEnemyTakesHit);
+    this.player.addCollider(
+      this.enemies.getProjectiles(),
+      this.handleEnemyTakesHit
+    );
     this.player.addCollider(this.layers.traps, this.handleEnemyTakesHit);
-    this.player.addOverlap(this.collectibles, (player, diamond) => this.handleDiamondPickup(player, diamond, this.hud));
+    this.player.addOverlap(this.collectibles, (player, diamond) =>
+      this.handleDiamondPickup(player, diamond, this.hud)
+    );
   }
 
   setupFollowupCameraOn() {
@@ -194,12 +230,30 @@ class Play extends Phaser.Scene {
   }
 
   getCurrentLevel() {
-    return this.registry.get('level') || 1;
+    return this.registry.get("level") || 1;
   }
 
   update() {
     this.spikedBg.tilePositionX = this.cameras.main.scrollX * 0.3;
     this.sky.tilePositionX = this.cameras.main.scrollX * 0.1;
+
+    const gemsToNextLevel = TOTAL_GEMS_BY_LEVEL["level" + this.currentLevel];
+
+    if (this.score >= gemsToNextLevel) {
+      this.time.addEvent({
+        delay: 500,
+        callback: () => {
+          this.registry.set(
+            "level",
+            2 /* hardcoded as we only have 2 levels */
+          );
+          this.score = 0;
+          this.scene.restart();
+        },
+        loop: false,
+        repeat: false,
+      });
+    }
   }
 }
 

@@ -2,6 +2,8 @@ import Phaser from "phaser";
 
 import PlayScene from "./scenes/Play";
 import PreloadScene from "./scenes/Preload";
+import MenuScene from "./scenes/Menu";
+import LevelsScene from "./scenes/Levels";
 
 const MAP_WIDTH = 1600;
 const WIDTH = document.body.offsetWidth;
@@ -22,10 +24,10 @@ const SHARED_CONFIG = {
   },
   zoomFactor: ZOOM_FACTOR,
   debug: false,
-  backgroundColor: '#190d1a'
+  backgroundColor: "#190d1a",
 };
 
-const Scenes = [PreloadScene, PlayScene];
+const Scenes = [PreloadScene, MenuScene, LevelsScene, PlayScene];
 const createScene = (Scene) => new Scene(SHARED_CONFIG);
 const initScenes = () => Scenes.map(createScene);
 
