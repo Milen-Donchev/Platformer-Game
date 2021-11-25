@@ -22,15 +22,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
   init() {
     this.gravity = 500;
     this.speed = 75;
-    this.timeFromLastTurn = 0;
-    this.maxPatrolDistance = 250;
-    this.currentPatrolDistance = 0;
     this.hp = 40;
-
-    this.platformCollidersLayer = null;
-    this.rayGraphics = this.scene.add.graphics({
-      lineStyle: { width: 2, color: 0xaa00aa },
-    });
 
     this.body.setGravityY(this.gravity);
     this.setCollideWorldBounds(true);
@@ -43,7 +35,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
   }
 
-  update(time) {
+  update() {
     if (this.getBounds().bottom > 600) {
       this.scene.events.removeListener(
         Phaser.Scenes.Events.UPDATE,
@@ -51,46 +43,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this
       );
       this.setActive(false);
-      this.rayGraphics.clear();
       return this.destroy();
     }
-    this.patrol(time);
-  }
-
-  patrol(time) {
-    if (!this.body || !this.body.onFloor()) {
-      return;
-    }
-
-    this.currentPatrolDistance += Math.abs(this.body.deltaX());
-
-    const { ray, hasHit } = this.raycast(
-      this.body,
-      this.platformCollidersLayer,
-      {
-        precision: 1,
-        steepnes: 0.2,
-      }
-    );
-
-    if (
-      (!hasHit || this.currentPatrolDistance >= this.maxPatrolDistance) &&
-      this.timeFromLastTurn + 100 < time
-    ) {
-      this.setFlipX(!this.flipX);
-      this.setVelocityX((this.speed = -this.speed));
-      this.timeFromLastTurn = time;
-      this.currentPatrolDistance = 0;
-    }
-
-    if (ray && this.config.debug) {
-      this.rayGraphics.clear();
-      this.rayGraphics.strokeLineShape(ray);
-    }
-  }
-
-  setPlatformColliders(platformCollidersLayer) {
-    this.platformCollidersLayer = platformCollidersLayer;
   }
 
   takeHit(source) {
@@ -101,6 +55,17 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.setVelocity(0, -200);
       this.body.checkCollision.none = true;
       this.setCollideWorldBounds(false);
+    }
+  }
+
+  patrol() {
+    const LEFT = this.body.blocked.left;
+    if (LEFT) {
+      this.setFlipX(false);
+      this.setVelocityX(this.speed);
+    } else {
+      this.setFlipX(true);
+      this.setVelocityX(-this.speed);
     }
   }
 }

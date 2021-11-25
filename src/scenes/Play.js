@@ -13,6 +13,7 @@ class Play extends Phaser.Scene {
     super("PlayScene");
     this.config = config;
 
+    this.currentLevel = null;
     this.map = null;
     this.layers = null;
     this.playerZones = null;
@@ -44,10 +45,11 @@ class Play extends Phaser.Scene {
   }
 
   createMap() {
-    const map = this.make.tilemap({ key: "map" });
+    const map = this.make.tilemap({ key: `level-${this.getCurrentLevel()}` });
     map.addTilesetImage("main_lev_build_1", "tiles-1");
     map.addTilesetImage("main_lev_build_2", "tiles-2");
     this.map = map;
+    this.currentLevel = this.getCurrentLevel();
   }
 
   createLayers() {
@@ -56,6 +58,7 @@ class Play extends Phaser.Scene {
     const collidable = this.map.createStaticLayer("collidable", tileset);
     const environment = this.map.createStaticLayer("cosmetics", tileset);
     const traps = this.map.createStaticLayer("traps", tileset);
+    const enemyBounds = this.map.createStaticLayer("enemy_bounds", tileset).setAlpha(0);
     const platforms = this.map.createStaticLayer("platforms", [
       tileset,
       tileset2,
@@ -64,12 +67,22 @@ class Play extends Phaser.Scene {
     const enemySpawns = this.map.getObjectLayer("enemy_zones");
     const collectibles = this.map.getObjectLayer("collectibles");
 
-    collidable.setCollisionBetween(1674, 1675);
-    traps.setCollisionBetween(3537, 3538);
+    
+    const level2 = this.currentLevel !== 1;
+    if (level2) {
+      enemyBounds.setCollisionBetween( 4555, 4619);
+      collidable.setCollisionBetween(1674, 1675);
+      traps.setCollisionBetween(3537, 3538);
+    } else {
+      enemyBounds.setCollisionBetween(327, 391);
+      collidable.setCollisionBetween(1670, 1671);
+      traps.setCollisionBetween(3537, 3538);
+    }
 
     this.layers = {
       environment,
       platforms,
+      enemyBounds,
       traps,
       collidable,
       playerZones,
@@ -129,7 +142,6 @@ class Play extends Phaser.Scene {
 
     enemySpawns.forEach(({ type, x, y }) => {
       const enemy = new enemyTypes[type](this, x, y);
-      enemy.setPlatformColliders(this.layers.collidable);
       enemies.add(enemy);
     });
 
@@ -141,7 +153,12 @@ class Play extends Phaser.Scene {
       .addCollider(this.layers.collidable)
       .addCollider(this.player, this.handlePlayerTakesHit)
       .addCollider(this.player.projectiles, this.handleEnemyTakesHit)
-      .addOverlap(this.player.meleeWeapon, this.handleEnemyTakesHit);
+      .addOverlap(this.player.meleeWeapon, this.handleEnemyTakesHit)
+      .addCollider(this.layers.enemyBounds, this.handleEnemyHitBounds);
+  }
+
+  handleEnemyHitBounds(enemy) {
+    enemy.patrol();
   }
 
   handleEnemyTakesHit(entity, source) {
@@ -174,6 +191,10 @@ class Play extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, mapWidth, height + 200);
     this.cameras.main.setBounds(0, 0, mapWidth, height).setZoom(zoomFactor);
     this.cameras.main.startFollow(this.player);
+  }
+
+  getCurrentLevel() {
+    return this.registry.get('level') || 1;
   }
 
   update() {

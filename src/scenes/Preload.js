@@ -6,7 +6,8 @@ class Preload extends Phaser.Scene {
   }
 
   preload() {
-    this.load.tilemapTiledJSON("map", "assets/milenski_map.json");
+    this.load.tilemapTiledJSON("level-1", "assets/milenski_map_level_1.json");
+    this.load.tilemapTiledJSON("level-2", "assets/milenski_map_level_2.json");
     this.load.image("tiles-1", "assets/main_lev_build_1.png");
     this.load.image("tiles-2", "assets/main_lev_build_2.png");
 
@@ -76,10 +77,11 @@ class Preload extends Phaser.Scene {
       frameHeight: 32,
       spacing: 16,
     });
-  }
 
-  create() {
-    this.scene.start("PlayScene");
+    this.load.on('complete', () => {
+      this.registry.set('level', 1);
+      this.scene.start("PlayScene");
+    });
   }
 }
 
