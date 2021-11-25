@@ -63,9 +63,11 @@ class Play extends Phaser.Scene {
     const { topRightCorner, height } = this.config;
     const X = topRightCorner.x - 10;
     const Y = height - topRightCorner.y - 10;
+
     const backButton = this.add
       .image(X, Y, "back")
       .setOrigin(1)
+      .setScale(1.5)
       .setScrollFactor(0)
       .setDepth(24)
       .setInteractive({ useHandCursor: true });
@@ -246,6 +248,9 @@ class Play extends Phaser.Scene {
       this.time.addEvent({
         delay: 500,
         callback: () => {
+          const levels = JSON.parse(localStorage.getItem("levels"));
+          levels.push({ key: 2, text: "Level 2" });
+          localStorage.setItem("levels", JSON.stringify(levels));
           this.registry.set(
             "level",
             2 /* hardcoded as we only have 2 levels */

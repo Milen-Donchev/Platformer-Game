@@ -1,21 +1,19 @@
-import Phaser from "phaser";
+import Base from "./Base";
 
-class LevelsScene extends Phaser.Scene {
+import backButtonMixin from "../mixins/backButton";
+
+class Levels extends Base {
   constructor(config) {
-    super("LevelsScene");
+    super("LevelsScene", config);
     this.config = config;
+
+    Object.assign(this, backButtonMixin);
   }
 
   create() {
-    this.createBackground();
+    super.create();
     this.createLevels();
-  }
-
-  createBackground() {
-    this.add
-      .image(0, 0, "menu-bg")
-      .setOrigin(0)
-      .setDisplaySize(this.config.width, this.config.height);
+    this.createBackButton();
   }
 
   createLevels() {
@@ -44,9 +42,9 @@ class LevelsScene extends Phaser.Scene {
   }
 
   startLevel(level) {
-    level === 1 ? null : this.registry.set("level", level);
+    this.registry.set("level", level);
     this.scene.start("PlayScene");
   }
 }
 
-export default LevelsScene;
+export default Levels;

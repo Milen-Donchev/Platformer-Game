@@ -1,21 +1,13 @@
-import Phaser from "phaser";
-
-class MenuScene extends Phaser.Scene {
+import Base from "./Base";
+class Menu extends Base {
   constructor(config) {
-    super("Menu");
+    super("Menu", config);
     this.config = config;
   }
 
   create() {
-    this.createBackground();
+    super.create();
     this.createMenuOptions();
-  }
-
-  createBackground() {
-    this.add
-      .image(0, 0, "menu-bg")
-      .setOrigin(0)
-      .setDisplaySize(this.config.width, this.config.height);
   }
 
   createMenuOptions() {
@@ -54,4 +46,4 @@ class MenuScene extends Phaser.Scene {
   }
 }
 
-export default MenuScene;
+export default Menu;

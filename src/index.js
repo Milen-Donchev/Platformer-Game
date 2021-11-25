@@ -4,6 +4,7 @@ import PlayScene from "./scenes/Play";
 import PreloadScene from "./scenes/Preload";
 import MenuScene from "./scenes/Menu";
 import LevelsScene from "./scenes/Levels";
+import CreditsScene from "./scenes/Credits";
 
 const MAP_WIDTH = 1600;
 const WIDTH = document.body.offsetWidth;
@@ -27,7 +28,7 @@ const SHARED_CONFIG = {
   backgroundColor: "#190d1a",
 };
 
-const Scenes = [PreloadScene, MenuScene, LevelsScene, PlayScene];
+const Scenes = [PreloadScene, MenuScene, LevelsScene, PlayScene, CreditsScene];
 const createScene = (Scene) => new Scene(SHARED_CONFIG);
 const initScenes = () => Scenes.map(createScene);
 
