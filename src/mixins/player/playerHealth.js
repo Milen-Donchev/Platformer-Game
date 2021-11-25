@@ -13,6 +13,8 @@ export default {
     this.createHpBar();
     if (this.hp - dmg < 0) {
       setTimeout(() => {
+        this.hp = 0;
+        this.createHpBar();
         this.loseGame();
       }, 0);
     }
@@ -24,6 +26,8 @@ export default {
 
   handleFallBeyondBounds() {
     if (this.getBounds().bottom > 600) {
+      this.hp = 0;
+      this.createHpBar();
       this.scene.time.addEvent({
         delay: 500,
         loop: false,

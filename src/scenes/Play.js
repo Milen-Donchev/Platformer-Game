@@ -9,8 +9,8 @@ import Emitter from "../events/Emitter";
 import initGeneralAnims from "../entities/anims/generalAnims";
 
 const TOTAL_GEMS_BY_LEVEL = {
-  level1: 5,
-  level2: 81,
+  level1: 34,
+  level2: 30,
 };
 
 class Play extends Phaser.Scene {
@@ -32,7 +32,6 @@ class Play extends Phaser.Scene {
   }
 
   create({ gameStatus }) {
-    console.log(this.score);
     initGeneralAnims(this.anims);
     if (gameStatus !== "PLAYER_LOSE") {
       this.createGameEvents();
@@ -49,6 +48,7 @@ class Play extends Phaser.Scene {
     this.createPlayerColliders();
     this.setupFollowupCameraOn();
     this.hud = new HUD(this, 0, 0);
+    this.hud.setupItems(TOTAL_GEMS_BY_LEVEL["level" + this.currentLevel]);
   }
 
   createMap() {
@@ -203,10 +203,13 @@ class Play extends Phaser.Scene {
     player.takeHit(enemy);
   }
 
-  handleDiamondPickup(player, diamond, hud) {
-    this.score += diamond.pickupValue;
-    hud.updateScoreBoard(this.score);
-    diamond.pickup(player);
+  handleDiamondPickup(_, diamond, hud) {
+    this.score++;
+    hud.updateScoreBoard(
+      this.score,
+      TOTAL_GEMS_BY_LEVEL["level" + this.currentLevel]
+    );
+    diamond.pickup();
   }
 
   createPlayerColliders() {

@@ -1,9 +1,8 @@
-import Phaser from 'phaser';
-
+import Phaser from "phaser";
 
 class Diamond extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
-    super(scene, x, y, 'diamond');
+    super(scene, x, y, "diamond");
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -14,22 +13,21 @@ class Diamond extends Phaser.Physics.Arcade.Sprite {
     this.setSize(this.width - 2.5, this.height - 2.5);
   }
 
-  pickup(player) {
-    player.score += this.pickupValue;
+  pickup() {
     this.destroy();
   }
 
   moveDiamond() {
-    this.play('diamond-spin', true);
+    this.play("diamond-spin", true);
     this.scene.tweens.add({
       targets: this,
       y: this.y - Phaser.Math.Between(-4, -15),
-      ease: 'linear',
+      ease: "linear",
       duration: Phaser.Math.Between(1000, 2000),
       repeat: -1,
-      yoyo: true
-    })
+      yoyo: true,
+    });
   }
-};
+}
 
 export default Diamond;

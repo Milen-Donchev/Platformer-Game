@@ -26,7 +26,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.init();
     this.initEvents();
-  } 
+  }
 
   init() {
     this.config = this.scene.config;
@@ -38,9 +38,9 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.hasBeenHit = false;
     this.hitVelocity = 250;
     this.hp = 100;
-    this.score = 0;
+    // this.score = 0;
     this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT;
-    this.projectiles = new Projectiles(this.scene, 'iceball');
+    this.projectiles = new Projectiles(this.scene, "iceball");
     this.meleeWeapon = new MeleeWeapon(this.scene, 0, 0, "sword-attack");
     this.cursors = this.scene.input.keyboard.createCursorKeys();
 
@@ -53,11 +53,11 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.initPlayerAttacks();
     initAnimations(this.scene.anims);
   }
-  
+
   initEvents() {
     this.scene.events.on(Phaser.Scenes.Events.UPDATE, this.update, this);
   }
-  
+
   update() {
     if (this.hasBeenHit || this.isDucking || !this.body) return;
     this.handlePlayerMovement();
