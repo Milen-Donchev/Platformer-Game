@@ -38,11 +38,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     this.hasBeenHit = false;
     this.hitVelocity = 250;
     this.hp = 100;
-    // this.score = 0;
     this.lastDirection = Phaser.Physics.Arcade.FACING_RIGHT;
     this.projectiles = new Projectiles(this.scene, "iceball");
     this.meleeWeapon = new MeleeWeapon(this.scene, 0, 0, "sword-attack");
     this.cursors = this.scene.input.keyboard.createCursorKeys();
+    this.walkSoundPlaying = false;
+
+    this.jumpSound = this.scene.sound.add("jump-sound", { volume: 0.2 });
+    this.shootSound = this.scene.sound.add("shoot-sound", { volume: 0.2 });
+    this.walkSound = this.scene.sound.add("walk-sound", { volume: 0.2 });
+    this.diamondSound = this.scene.sound.add("diamond-sound", { volume: 0.2 });
+    this.swipeSound = this.scene.sound.add("swipe-sound", { volume: 0.2 });
 
     this.body.setSize(20, 36);
     this.body.setGravityY(this.gravity);

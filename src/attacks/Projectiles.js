@@ -33,10 +33,12 @@ class Projectiles extends Phaser.Physics.Arcade.Group {
       const FACING_RIGHT = initiator.lastDirection === PHASER_RIGHT;
       const { x, y } = initiator.getCenter();
       const CENTER_X = FACING_RIGHT ? x + 10 : x - 10;
-
       projectile.speed = FACING_RIGHT ? SPEED : -SPEED;
       projectile.setFlipX(!FACING_RIGHT);
       projectile.fire(CENTER_X, y);
+      if (initiator.healthBar) {
+        initiator.shootSound.play();
+      }
       this.playAnimation(animation);
       this.timeFromLastShot = new Date().getTime();
     }

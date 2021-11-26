@@ -36,6 +36,7 @@ class Play extends Phaser.Scene {
     if (gameStatus !== "PLAYER_LOSE") {
       this.createGameEvents();
     }
+    this.playThemeMusic();
     this.createMap();
     this.createBackButton();
     this.createLayers();
@@ -49,6 +50,11 @@ class Play extends Phaser.Scene {
     this.setupFollowupCameraOn();
     this.hud = new HUD(this, 0, 0);
     this.hud.setupItems(TOTAL_GEMS_BY_LEVEL["level" + this.currentLevel]);
+  }
+
+  playThemeMusic() {
+    if (this.sound.get("theme")) return;
+    // this.sound.add("theme", { volume: 0.25, loop: true }).play();
   }
 
   createMap() {
@@ -206,7 +212,8 @@ class Play extends Phaser.Scene {
     player.takeHit(enemy);
   }
 
-  handleDiamondPickup(_, diamond, hud) {
+  handleDiamondPickup(player, diamond, hud) {
+    player.diamondSound.play();
     this.score++;
     hud.updateScoreBoard(
       this.score,

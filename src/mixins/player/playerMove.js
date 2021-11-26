@@ -12,10 +12,21 @@ export default {
     const JUMP_ALLOWED = CAN_JUMP && UP;
     const moveUp = () => {
       this.setVelocityY(-this.playerSpeed * 2);
+      this.jumpSound.play();
       this.jumpCount++;
     };
     const moveHorizontal = () => {
       this.setVelocityX(VELOCITY_X);
+      if (!this.walkSoundPlaying && ON_FLOOR) {
+        this.walkSound.play();
+        this.walkSoundPlaying = true;
+        this.scene.time.addEvent({
+          loop: false,
+          repeat: false,
+          delay: 350,
+          callback: () => (this.walkSoundPlaying = false),
+        });
+      }
       this.lastDirection =
         Phaser.Physics.Arcade[RIGHT ? "FACING_RIGHT" : "FACING_LEFT"];
     };
@@ -42,15 +53,15 @@ export default {
   },
 
   handleDuck() {
-    this.scene.input.keyboard.on('keydown-DOWN', () => {
-      this.play('duck', true);
+    this.scene.input.keyboard.on("keydown-DOWN", () => {
+      this.play("duck", true);
       this.body.setSize(this.width, this.height / 2);
       this.setOffset(0, this.height / 2);
       this.setVelocityX(0);
       this.isDucking = true;
     });
 
-    this.scene.input.keyboard.on('keyup-DOWN', () => {
+    this.scene.input.keyboard.on("keyup-DOWN", () => {
       this.setSize(this.width, this.height);
       this.setOffset(0, 0);
       this.isDucking = false;
@@ -58,7 +69,11 @@ export default {
   },
 
   handlePlayerAnimations() {
-    if (this.isPlayingAnimation("shoot-projectile") || this.isPlayingAnimation("duck")) return;
+    if (
+      this.isPlayingAnimation("shoot-projectile") ||
+      this.isPlayingAnimation("duck")
+    )
+      return;
     this.body.velocity.y !== 0
       ? this.play("jump", true)
       : this.body.velocity.x === 0

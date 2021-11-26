@@ -17,6 +17,14 @@ class Preload extends Phaser.Scene {
     this.load.image("bg-spikes-dark", "assets/bg_spikes_dark.png");
     this.load.image("sky2", "assets/sky2.png");
 
+    this.load.audio("theme", "assets/music/theme_music.wav");
+    this.load.audio("menu-music", "assets/music/menu_music.wav");
+    this.load.audio("shoot-sound", "assets/music/projectile_launch.wav");
+    this.load.audio("walk-sound", "assets/music/step_mud.wav");
+    this.load.audio("jump-sound", "assets/music/jump.wav");
+    this.load.audio("swipe-sound", "assets/music/swipe.wav");
+    this.load.audio("diamond-sound", "assets/music/coin_pickup.wav");
+
     this.load.image("iceball", "assets/weapons/iceball_001.png");
     this.load.image("iceball-2", "assets/weapons/iceball_002.png");
 

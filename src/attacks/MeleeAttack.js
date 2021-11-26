@@ -48,6 +48,7 @@ class MeleeWeapon extends Phaser.Physics.Arcade.Sprite {
       this.lastAttack + this.attackSpeed >= new Date().getTime()
     )
       return;
+    wielder.swipeSound.play();
     wielder.play("shoot-projectile", true);
     this.lastAttack = new Date().getTime();
     this.wielder = wielder;
